@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 150 100% 50%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 150 100% 50%;
+    --radius: 0.5rem;
+    --chart-1: 150 100% 50%;
+    --chart-2: 36 90% 55%;
+    --chart-3: 25 100% 50%;
+    --chart-4: 0 100% 60%;
+    --chart-5: 200 80% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #0A0A0B;
+    color: #ffffff;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-xl;
+  }
+  .text-tg-green {
+    color: #00FF88;
+  }
+  .text-tg-muted {
+    color: #6b7280;
+  }
+  .bg-tg-green {
+    background-color: #00FF88;
+  }
+  .tier-safe {
+    @apply text-emerald-400 bg-emerald-400/10 border-emerald-400/20;
+  }
+  .tier-moderate {
+    @apply text-amber-400 bg-amber-400/10 border-amber-400/20;
+  }
+  .tier-risky {
+    @apply text-orange-400 bg-orange-400/10 border-orange-400/20;
+  }
+  .tier-danger {
+    @apply text-red-400 bg-red-400/10 border-red-400/20;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+  }
+}
