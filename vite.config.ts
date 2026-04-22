@@ -5,7 +5,11 @@ import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
+  plugins: [
+    devServer({ entry: "api/boot.ts", exclude: [/^\/(?!api\/).*$/] }),
+    react()
+  ],
   server: {
     port: 3000,
   },
@@ -22,4 +26,4 @@ export default defineConfig(({ mode }) => ({
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
   },
-}));
+});
