@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { createRouter, publicQuery } from "./middleware";
-import { getDb } from "./queries/connection";
+import { createRouter, publicQuery } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
 import { wallets, tokens, trustScores } from "@db/schema";
 import { eq, desc, sql } from "drizzle-orm";
-import { MOCK_WALLETS, MOCK_TOKENS, MOCK_TRUST_SCORES } from "./mock-data";
+import { MOCK_WALLETS, MOCK_TOKENS, MOCK_TRUST_SCORES } from "./mock-data.js";
 
 export const walletRouter = createRouter({
   getByAddress: publicQuery

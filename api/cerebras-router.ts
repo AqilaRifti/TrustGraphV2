@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { createRouter, publicQuery } from "./middleware";
-import { cerebrasChatCompletion, generateTrustExplanation, getKeyStats } from "./cerebras-client";
+import { createRouter, publicQuery } from "./middleware.js";
+import { cerebrasChatCompletion, generateTrustExplanation, getKeyStats } from "./cerebras-client.js";
 
 export const cerebrasRouter = createRouter({
   analyzeToken: publicQuery

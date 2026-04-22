@@ -1,11 +1,11 @@
-import { authRouter } from "./auth-router";
-import { tokenRouter } from "./token-router";
-import { walletRouter } from "./wallet-router";
-import { scanRouter } from "./scan-router";
-import { graphRouter } from "./graph-router";
-import { cerebrasRouter } from "./cerebras-router";
-import { moralisRouter } from "./moralis-router";
-import { createRouter, publicQuery } from "./middleware";
+import { authRouter } from "./auth-router.js";
+import { tokenRouter } from "./token-router.js";
+import { walletRouter } from "./wallet-router.js";
+import { scanRouter } from "./scan-router.js";
+import { graphRouter } from "./graph-router.js";
+import { cerebrasRouter } from "./cerebras-router.js";
+import { moralisRouter } from "./moralis-router.js";
+import { createRouter, publicQuery } from "./middleware.js";
 
 export const appRouter = createRouter({
   ping: publicQuery.query(() => ({ ok: true, ts: Date.now() })),

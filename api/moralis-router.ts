@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createRouter, publicQuery } from "./middleware";
+import { createRouter, publicQuery } from "./middleware.js";
 
 // Moralis integration - in production, you'd use the Moralis SDK with API key
 // For demo, we provide a structure that can be easily wired to real Moralis calls

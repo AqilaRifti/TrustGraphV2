@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { createRouter, publicQuery } from "./middleware";
-import { getDb } from "./queries/connection";
+import { createRouter, publicQuery } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
 import { graphNodes, graphEdges } from "@db/schema";
-import { MOCK_GRAPH_NODES, MOCK_GRAPH_EDGES } from "./mock-data";
+import { MOCK_GRAPH_NODES, MOCK_GRAPH_EDGES } from "./mock-data.js";
 
 export const graphRouter = createRouter({
   getData: publicQuery.query(async () => {

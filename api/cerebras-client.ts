@@ -19,10 +19,10 @@ function getNextClient(): Cerebras {
   // Find the key with the lowest request count (round-robin with load balancing)
   const minCount = Math.min(...requestCounts);
   currentKeyIndex = requestCounts.indexOf(minCount);
-  
+
   currentClient = new Cerebras({ apiKey: API_KEYS[currentKeyIndex] });
   requestCounts[currentKeyIndex]++;
-  
+
   return currentClient;
 }
 
@@ -65,7 +65,7 @@ export async function cerebrasChatCompletion(
   } = options;
 
   let lastError: Error | null = null;
-  
+
   // Try each key until one works
   for (let i = 0; i < API_KEYS.length; i++) {
     try {
@@ -85,7 +85,7 @@ export async function cerebrasChatCompletion(
       // Continue to next key
     }
   }
-  
+
   throw new Error(`All Cerebras API keys exhausted. Last error: ${lastError?.message}`);
 }
 
@@ -125,10 +125,16 @@ Provide your analysis.`;
   ], {
     maxCompletionTokens: 4096,
     temperature: 0.6,
+    stream: false, // Explicitly set to false to ensure we get ChatCompletion type
   });
 
-  const text = (response.choices[0]?.message?.content || "") as string;
-  
+  // Type guard: ensure response is not a stream and has choices
+  if (!response || !('choices' in response) || !Array.isArray(response.choices)) {
+    throw new Error("Invalid response from Cerebras API");
+  }
+
+  const text = ((response.choices[0]?.message?.content || "") as string);
+
   // Parse the response
   const explanation = text.split("KEY_CONCERNS:")[0]?.trim() || text;
   const concernsMatch = text.match(/KEY_CONCERNS:?\s*([\s\S]*?)(?=POSITIVE_SIGNALS:|RECOMMENDATION:|$)/);
@@ -138,7 +144,7 @@ Provide your analysis.`;
   const keyConcerns = concernsMatch
     ? concernsMatch[1].split("\n").filter((s) => s.trim().startsWith("-") || s.trim().startsWith("•")).map((s) => s.replace(/^[\s\-•]+/, "").trim())
     : [];
-  
+
   const positiveSignals = positivesMatch
     ? positivesMatch[1].split("\n").filter((s) => s.trim().startsWith("-") || s.trim().startsWith("•")).map((s) => s.replace(/^[\s\-•]+/, "").trim())
     : [];
@@ -147,7 +153,7 @@ Provide your analysis.`;
     ? recommendationMatch[1].trim()
     : score >= 75 ? "This token shows strong trust signals. Consider as a potential opportunity." :
       score >= 50 ? "Proceed with caution. Monitor for changes in risk profile." :
-      "High risk detected. Consider avoiding or minimal exposure.";
+        "High risk detected. Consider avoiding or minimal exposure.";
 
   return {
     explanation,

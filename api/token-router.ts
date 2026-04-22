@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { createRouter, publicQuery } from "./middleware";
-import { getDb } from "./queries/connection";
+import { createRouter, publicQuery } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
 import { tokens, trustScores, riskFlags, alerts, wallets } from "@db/schema";
 import { eq, desc, ilike, or, sql, inArray } from "drizzle-orm";
-import { MOCK_TOKENS, MOCK_TRUST_SCORES, MOCK_RISK_FLAGS, MOCK_WALLETS } from "./mock-data";
+import { MOCK_TOKENS, MOCK_TRUST_SCORES, MOCK_RISK_FLAGS, MOCK_WALLETS } from "./mock-data.js";
 
 export const tokenRouter = createRouter({
   list: publicQuery

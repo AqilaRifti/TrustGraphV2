@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { createRouter, publicQuery } from "./middleware";
-import { getDb } from "./queries/connection";
+import { createRouter, publicQuery } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
 import { tokens, trustScores, riskFlags, wallets } from "@db/schema";
 import { sql, eq } from "drizzle-orm";
-import { MOCK_TOKENS, MOCK_TRUST_SCORES, MOCK_RISK_FLAGS, MOCK_WALLETS } from "./mock-data";
+import { MOCK_TOKENS, MOCK_TRUST_SCORES, MOCK_RISK_FLAGS, MOCK_WALLETS } from "./mock-data.js";
 
 export const scanRouter = createRouter({
   portfolio: publicQuery
@@ -12,7 +12,7 @@ export const scanRouter = createRouter({
       try {
         const db = getDb();
         const allTokens = await db.select().from(tokens).limit(8).orderBy(sql`RAND()`);
-        
+
         let useTokens = allTokens;
         if (allTokens.length === 0) {
           useTokens = MOCK_TOKENS.slice(0, 8) as any;
@@ -37,7 +37,7 @@ export const scanRouter = createRouter({
           const score = scoresList.find((s: any) => s.tokenAddress === token.address);
           const flags = flagsList.filter((f: any) => f.tokenAddress === token.address);
           const metadata = (token.metadata || {}) as Record<string, any>;
-          
+
           const hash = token.address.split("").reduce((acc: number, c: string) => acc + c.charCodeAt(0), 0);
           const value = (hash % 5000) + 100;
           const quantity = Math.floor((hash % 1000000) + 1000);
@@ -72,8 +72,8 @@ export const scanRouter = createRouter({
         const summary = dangerCount > 0
           ? `CRITICAL: ${dangerCount} token(s) in your portfolio are confirmed scams or honeypots. Immediate action recommended. $${atRisk.toFixed(0)} at risk.`
           : riskyCount > 0
-          ? `WARNING: ${riskyCount} token(s) show elevated risk. Consider reducing exposure. $${atRisk.toFixed(0)} potentially at risk.`
-          : `GOOD: Portfolio shows healthy risk distribution. Most tokens have acceptable trust scores.`;
+            ? `WARNING: ${riskyCount} token(s) show elevated risk. Consider reducing exposure. $${atRisk.toFixed(0)} potentially at risk.`
+            : `GOOD: Portfolio shows healthy risk distribution. Most tokens have acceptable trust scores.`;
 
         const walletData = MOCK_WALLETS.find(w => w.address.toLowerCase() === input.address.toLowerCase()) || null;
 
@@ -101,7 +101,7 @@ export const scanRouter = createRouter({
           const score = scoresList.find(s => s.tokenAddress === token.address);
           const flags = flagsList.filter(f => f.tokenAddress === token.address);
           const metadata = (token.metadata || {}) as Record<string, any>;
-          
+
           const hash = token.address.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
           const value = (hash % 5000) + 100;
           const quantity = Math.floor((hash % 1000000) + 1000);
